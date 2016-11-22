@@ -5,20 +5,25 @@ import java.util.Calendar;
 import java.util.List;
 
 import interfaces.Alertable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 /*
- *  Photo model
+ *  Photo model specialized for serialization
  *  @author Renard Tumbokon, Nikhil Menon
  */
-public class Photo implements Alertable{
-	private Image image;
+public class Photo implements Alertable, Serializable{
+
+	private static final long serialVersionUID = -4742944524742845197L;
+	
+	private int width, height; //SERIALIZABLE field
+	private int[][] pixels; //SERIALIZABLE field
+	
 	private String caption;
 	private List<Tag> tags;
 	private Calendar cal;
@@ -29,7 +34,7 @@ public class Photo implements Alertable{
 	 * @Image file
 	 */
 	public Photo(Image image){
-		this.image = image;
+		setImage(image);
 		this.caption = "";
 		this.tags = new ArrayList<Tag>();
 		
@@ -38,13 +43,76 @@ public class Photo implements Alertable{
 		this.date = cal.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 	
-	/*
+	/*	SERIALIZE FUNCTION
+	 * Converts Image to pixel array
+	 * @param image to beconverted
+	 */
+	private void setImage(Image image) {
+		width = ((int) image.getWidth());
+		height = ((int) image.getHeight());
+		pixels = new int[width][height];
+		
+		PixelReader r = image.getPixelReader();
+		for (int i = 0; i < width; i++)
+			for (int j = 0; j < height; j++)
+				pixels[i][j] = r.getArgb(i, j);
+	}	
+	
+	/* SERIALIZE FUNCTION
 	 * Getter image
 	 * @return Image image
 	 */
 	public Image getImage(){
+		WritableImage image = new WritableImage(width, height);
+		
+		PixelWriter w = image.getPixelWriter();
+		for (int i = 0; i < width; i++)
+			for (int j = 0; j < height; j++)
+				w.setArgb(i, j, pixels[i][j]);
+		
 		return image;
 	}
+	
+	/**
+	 * Getter width
+	 * @return int
+	 */
+	public int getWidth() {
+		return width;
+	}
+	
+	/**
+	 * Getter height
+	 * @return height
+	 */
+	public int getHeight() {
+		return height;
+	}	
+	
+	/**
+	 * Pixel array getter
+	 * @return int[][]
+	 */
+	public int[][] getPixels() {
+		return pixels;
+	}
+	
+	/*
+	 * Check equality of images
+	 * @param image
+	 * @return boolean
+	 */
+	public boolean equals(Photo photo) {
+		if (width != photo.getWidth())
+			return false;
+		if (height != photo.getHeight())
+			return false;
+		for (int i = 0; i < width; i++)
+			for (int j = 0; j < height; j++)
+				if (pixels[i][j] != photo.getPixels()[i][j])
+					return false;
+		return true;
+	}	
 	
 	/*
 	 * Caption setter
@@ -175,5 +243,7 @@ public class Photo implements Alertable{
 		}
 		tags.remove(index);
 	}
+	
+	
 
 }

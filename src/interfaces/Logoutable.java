@@ -11,6 +11,12 @@ import model.Admin;
 
 public interface Logoutable {
 	default void logout(Stage window, Admin admin){
+		try {
+			Admin.write(admin); //serialized save
+		} catch (IOException e) {
+			System.out.println("Error in serializing admin in Logoutable interface");
+			e.printStackTrace();
+		} 
 		try{
 			// load fxml
 			FXMLLoader loader = new FXMLLoader();

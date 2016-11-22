@@ -1,12 +1,9 @@
 package controller;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -14,15 +11,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -189,10 +182,14 @@ public class AlbumListController implements Alertable, Logoutable, Quitable{
 			alert(AlertType.ERROR, "Invalid Input", "Tag must be in type:value pair");
 			return;
 		}
-		typeValue[0] = typeValue[0].replaceAll("\\s+", ""); //type
-		typeValue[1] = typeValue[1].replaceAll("\\s+", ""); //value
-
-		Tag tagToFind = new Tag(typeValue[0], typeValue[1]);
+		Tag tagToFind;
+		if (typeValue.length >= 2){
+			typeValue[0] = typeValue[0].replaceAll("\\s+", ""); //type
+			typeValue[1] = typeValue[1].replaceAll("\\s+", ""); //value	
+			tagToFind = new Tag(typeValue[0], typeValue[1]);
+		} else{
+			tagToFind = new Tag("", "");
+		}
 		
 		//date init
 		LocalDate from, to;
@@ -259,6 +256,6 @@ public class AlbumListController implements Alertable, Logoutable, Quitable{
 	
 	@FXML
 	private void handleQuitButton(){
-		quit();
+		quit(admin);
 	}
 }

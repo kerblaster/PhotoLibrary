@@ -9,10 +9,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -40,7 +39,7 @@ public class SearchListController implements Alertable, Logoutable, Quitable{
 	private List<Photo> searchResults; 
 	private ObservableList<String> tagObsList;
 	
-	@FXML private VBox thumbsVBox;
+	@FXML private ListView<Photo> thumbnailListView;
 	@FXML private ListView<String> tagsListView;
 	@FXML private Text searchText;
 	@FXML private ImageView bigImageView;
@@ -48,6 +47,8 @@ public class SearchListController implements Alertable, Logoutable, Quitable{
 	@FXML private TextField albumNameTextField;
 	@FXML private Text dateAddedText;
 	@FXML private Text counterText;
+	@FXML private Button leftButton;
+	@FXML private Button rightButton;
 	
 	/*
 	 * Called by AlbumListController.java when searching
@@ -86,7 +87,18 @@ public class SearchListController implements Alertable, Logoutable, Quitable{
 		//get caption from image
 		captionText.setText(searchResults.get(index).getCaption());
 		counterText.setText((index+1) + "/" + searchResults.size()); //set counter tracker
-		//setThumbnailListView(); //set thumbnail list last
+		//set grayed out buttons
+		if (index >= searchResults.size()-1){
+			rightButton.setDisable(true);
+		} else{
+			rightButton.setDisable(false);
+		}
+		if (index <= 0){
+			leftButton.setDisable(true);
+		} else{
+			leftButton.setDisable(false);
+		}
+		setThumbnailListView(); //set thumbnail list last
 	}
 	
 	/*
@@ -110,14 +122,13 @@ public class SearchListController implements Alertable, Logoutable, Quitable{
 		if (searchResults.size() < 1){
 			return;
 		}				
-        ListView<Photo> listView = new ListView<Photo>();
         ObservableList<Photo> items = FXCollections.observableArrayList();
 		for (Photo photo : searchResults){
-			items.add(photo);
+			items.add(photo); 
 		}
-        listView.setItems(items);
-        listView.setCellFactory(param -> new ListCell<Photo>() {
-            private ImageView imageView = new ImageView();
+		thumbnailListView.setItems(items);
+		thumbnailListView.setCellFactory(param -> new ListCell<Photo>() {
+        	private ImageView imageView = new ImageView();
             @Override
             public void updateItem(Photo p, boolean empty) {
                 super.updateItem(p, empty);
@@ -125,18 +136,18 @@ public class SearchListController implements Alertable, Logoutable, Quitable{
                     setText(null);
                     setGraphic(null);
                 } else {
-                    imageView.setImage(p.getImage());
-                    setText(p.getCaption());
-                    setGraphic(imageView);
+                	  imageView.setImage(p.getImage());
+                	  imageView.setPreserveRatio(true);
+                	  imageView.setFitHeight(100);
+                	  imageView.setFitWidth(100);
+                      setText(p.getCaption());
+                      setGraphic(imageView);                   	
                 }
             }
         });
-        	
-		listView.setMouseTransparent( true ); //make unselectable listview
-		listView.setFocusTraversable( false );
-		listView.getSelectionModel().select(index);//auto select index
-		
-		thumbsVBox = new VBox(listView); ; //works?
+		thumbnailListView.setFocusTraversable(false);
+		thumbnailListView.getSelectionModel().select(index);//auto select index
+		thumbnailListView.scrollTo(index);
 	}
 	
 	/*
@@ -182,6 +193,7 @@ public class SearchListController implements Alertable, Logoutable, Quitable{
 		}
 		Album newAlbum = new Album(albumNameTextField.getText(), searchResults);
 		user.addAlbum(newAlbum);
+		alert(AlertType.INFORMATION, "Creation Success", "New album successfully created!");
 		try{ // go back to album list
 			// load fxml
 			FXMLLoader loader = new FXMLLoader();
@@ -228,6 +240,6 @@ public class SearchListController implements Alertable, Logoutable, Quitable{
 	
 	@FXML
 	private void handleQuitButton(){
-		quit();
+		quit(admin);
 	}
 }

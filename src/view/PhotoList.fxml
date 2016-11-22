@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PhotoListController">
+<AnchorPane prefHeight="700.0" prefWidth="700.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PhotoListController">
    <children>
    
       <Button layoutX="14.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleAlbumListWindowButton" prefHeight="25.0" prefWidth="125.0" text="Back to Albums &gt;" />
@@ -42,9 +42,9 @@
       	
      <Button layoutX="614.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleQuitButton" text="Safe Quit" />
       	
-      <Button layoutX="183.0" layoutY="452.0" mnemonicParsing="false" onAction="#handleLeftButton" text="&lt;" />
+      <Button fx:id="leftButton" layoutX="183.0" layoutY="452.0" mnemonicParsing="false" onAction="#handleLeftButton" text="&lt;" />
       	
-      <Button layoutX="491.0" layoutY="452.0" mnemonicParsing="false" onAction="#handleRightButton" text="&gt;" />
+      <Button fx:id="rightButton" layoutX="491.0" layoutY="452.0" mnemonicParsing="false" onAction="#handleRightButton" text="&gt;" />
       	
       <Text fx:id="dateAddedText" layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Added:">
          <font>
@@ -72,6 +72,6 @@
             <Font size="16.0" />
          </font>
       </Text>
-      <VBox fx:id="thumbsViewBox" layoutX="14.0" layoutY="105.0" prefHeight="347.0" prefWidth="141.0" />
+      <ListView fx:id="thumbnailListView" layoutX="14.0" layoutY="102.0" prefHeight="353.0" prefWidth="141.0" />
    </children>
 </AnchorPane>

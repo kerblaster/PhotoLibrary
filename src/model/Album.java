@@ -5,13 +5,17 @@ import java.util.List;
 import interfaces.Alertable;
 import javafx.scene.control.Alert.AlertType;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /*
  * PhotoAlbum model
  * @author Renard Tumbokon, Nikhil Menon
  */
-public class Album implements Alertable{
+public class Album implements Alertable, Serializable{
+
+	private static final long serialVersionUID = 3494216752423050831L;
+	
 	private String name;
 	private Photo oldestPhoto;
 	private Photo newestPhoto;

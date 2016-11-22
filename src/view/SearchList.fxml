@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SearchListController">
+<AnchorPane prefHeight="700.0" prefWidth="700.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SearchListController">
 	
    <children>
       <Button layoutX="14.0" layoutY="494.0" mnemonicParsing="false" onAction="#handleAlbumListWindowButton" text="Back to Albums &gt;" />
@@ -28,9 +28,9 @@
       
       <Button layoutX="614.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleQuitButton" text="Safe Quit" />
       
-      <Button layoutX="183.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleLeftButton" text="&lt;" />
+      <Button fx:id="leftButton" layoutX="183.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleLeftButton" text="&lt;" />
       	
-      <Button layoutX="490.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleRightButton" text="&gt;" />
+      <Button fx:id="rightButton" layoutX="490.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleRightButton" text="&gt;" />
       
       <Text fx:id="searchText" layoutX="14.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Query:">
          <font>
@@ -65,10 +65,5 @@
             <Font size="16.0" />
          </font>
       </Text>
-      <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="105.0" prefHeight="377.0" prefWidth="152.0">
-         <content>
-            <VBox fx:id="thumbsVBox" prefHeight="380.0" prefWidth="150.0" />
-         </content>
-      </ScrollPane>
    </children>
 </AnchorPane>

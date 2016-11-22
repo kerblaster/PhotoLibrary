@@ -2,9 +2,6 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -12,11 +9,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -45,10 +40,10 @@ public class PhotoListController implements Alertable, Logoutable, Quitable{
 	User user;
 	Album photoList;
 	
-	private int index;
+	private int index; //keeps track of place 
 	private ObservableList<String> tagObsList;
 	
-	@FXML private VBox thumbsVBox;
+	@FXML private ListView<Photo> thumbnailListView;
 	@FXML private ListView<String> tagsListView;
 	@FXML private ImageView bigImageView;
 	@FXML private TextField captionTextField;
@@ -57,6 +52,8 @@ public class PhotoListController implements Alertable, Logoutable, Quitable{
 	@FXML private Text dateAddedText;
 	@FXML private ComboBox<String> albumComboBox;
 	@FXML private Text counterText;
+	@FXML private Button leftButton;
+	@FXML private Button rightButton;
 	
 	/*
 	 * Called by AlbumListController.java when select album
@@ -90,7 +87,18 @@ public class PhotoListController implements Alertable, Logoutable, Quitable{
 		//get caption from image
 		captionTextField.setText(photoList.getAllPhotos().get(index).getCaption());
 		counterText.setText((index+1) + "/" + photoList.getSize()); //set counter tracker
-		//setThumbnailListView(); //set thumbnail list last
+		//set grayed out buttons
+		if (index >= photoList.getSize()-1){
+			rightButton.setDisable(true);
+		} else{
+			rightButton.setDisable(false);
+		}
+		if (index <= 0){
+			leftButton.setDisable(true);
+		} else{
+			leftButton.setDisable(false);
+		}
+		setThumbnailListView(); //set thumbnail list
 	}
 	
 	/*
@@ -114,13 +122,12 @@ public class PhotoListController implements Alertable, Logoutable, Quitable{
 		if (photoList.getSize() < 1){
 			return;
 		}				
-        ListView<Photo> listView = new ListView<Photo>();
         ObservableList<Photo> items = FXCollections.observableArrayList();
 		for (Photo photo : photoList.getAllPhotos()){
 			items.add(photo); 
 		}
-        listView.setItems(items);
-        listView.setCellFactory(param -> new ListCell<Photo>() {
+		thumbnailListView.setItems(items);
+		thumbnailListView.setCellFactory(param -> new ListCell<Photo>() {
         	private ImageView imageView = new ImageView();
             @Override
             public void updateItem(Photo p, boolean empty) {
@@ -130,21 +137,17 @@ public class PhotoListController implements Alertable, Logoutable, Quitable{
                     setGraphic(null);
                 } else {
                 	  imageView.setImage(p.getImage());
+                	  imageView.setPreserveRatio(true);
+                	  imageView.setFitHeight(100);
+                	  imageView.setFitWidth(100);
                       setText(p.getCaption());
                       setGraphic(imageView);                   	
                 }
             }
         });
-        VBox box = new VBox(listView);
-        Scene scene = new Scene(box, 200, 200);
-        window.setScene(scene);
-        window.show();
-        	/*
-		listView.setMouseTransparent( true ); //make unselectable listview
-		listView.setFocusTraversable( false );
-		listView.getSelectionModel().select(index);//auto select index
-		
-		thumbsVBox = new VBox(listView); ; //works?*/
+		thumbnailListView.setFocusTraversable(false);
+		thumbnailListView.getSelectionModel().select(index);//auto select index
+		thumbnailListView.scrollTo(index);
 	}
 	
 	/*
@@ -213,10 +216,10 @@ public class PhotoListController implements Alertable, Logoutable, Quitable{
 			alert(AlertType.ERROR, "Invalid Image", "Image file cannot be read");
 			return;
 		}
+		saveCaption(); //save caption of photo prev on
 		Photo newPhoto = new Photo(newImage);
 		photoList.addPhoto(newPhoto);
 		index = photoList.getSize()-1; //should not be negative bc success add
-		saveCaption(); //save caption of photo prev on
 		refreshImageView();
 	}
 	
@@ -289,7 +292,7 @@ public class PhotoListController implements Alertable, Logoutable, Quitable{
 			return;			
 		}
 		user.getAlbum(albumIndex).addPhoto(photoList.getPhotoAtIndex(index));
-		alert(AlertType.INFORMATION, "Copy Success", "The image has been copied successfully");
+		alert(AlertType.INFORMATION, "Copy Success", "The image has been copied successfully!");
 	}	
 	
 	/*
@@ -311,7 +314,7 @@ public class PhotoListController implements Alertable, Logoutable, Quitable{
 			return;			
 		}
 		user.getAlbum(albumIndex).addPhoto(photoList.getPhotoAtIndex(index));
-		alert(AlertType.INFORMATION, "Copy Success", "The image has been copied successfully");
+		alert(AlertType.INFORMATION, "Copy Success", "The image has been moved successfully!");
 		handleDeletePhotoButton(); //delete photo
 	}
 		
@@ -347,6 +350,6 @@ public class PhotoListController implements Alertable, Logoutable, Quitable{
 	@FXML
 	private void handleQuitButton(){
 		saveCaption();
-		quit();
+		quit(admin);
 	}
 }

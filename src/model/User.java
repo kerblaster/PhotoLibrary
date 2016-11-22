@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,10 @@ import javafx.scene.control.Alert.AlertType;
  *  User model
  *  @author Renard Tumbokon, Nikhil Menon
  */
-public class User implements Alertable {
+public class User implements Alertable, Serializable {
+
+	private static final long serialVersionUID = -2541221015443017715L;
+
 	private String username;
 	private List<Album> albums;
 
