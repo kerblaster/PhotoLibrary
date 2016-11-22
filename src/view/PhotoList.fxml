@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PhotoListController">
+   <children>
+   
+      <Button layoutX="14.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleAlbumListWindowButton" prefHeight="25.0" prefWidth="125.0" text="Back to Albums &gt;" />
+      	
+     <Button layoutX="528.0" layoutY="142.0" mnemonicParsing="false" onAction="#handleAddPhotoButton" prefHeight="25.0" prefWidth="98.0" text="Add Photo" />	
+      	
+      <ImageView fx:id="bigImageView" fitHeight="347.0" fitWidth="332.0" layoutX="184.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" />
+      	
+      <TextField fx:id="captionTextField" layoutX="215.0" layoutY="452.0" prefHeight="27.0" prefWidth="269.0" promptText="Enter Caption Here" />
+      	
+      <TextField fx:id="tagTextField" layoutX="423.0" layoutY="513.0" prefHeight="27.0" prefWidth="152.0" promptText="Type: Value" />
+      	
+      <Button layoutX="573.0" layoutY="513.0" mnemonicParsing="false" onAction="#handleAddTagButton" prefHeight="27.0" prefWidth="83.0" text="Add Tag" />
+     	 
+      <Button layoutX="528.0" layoutY="105.0" mnemonicParsing="false" onAction="#handleCopyPhotoButton" prefHeight="27.0" prefWidth="73.0" text="Copy to" />
+      
+      <Button layoutX="608.0" layoutY="105.0" mnemonicParsing="false" onAction="#handleMovePhotoButton" prefHeight="27.0" prefWidth="73.0" text="Move to" />
+      	
+      <Button layoutX="528.0" layoutY="178.0" mnemonicParsing="false" onAction="#handleDeletePhotoButton" prefHeight="25.0" prefWidth="98.0" text="Delete Photo" />
+      	
+      <Button layoutX="573.0" layoutY="479.0" mnemonicParsing="false" onAction="#handleDeleteTagButton" prefHeight="27.0" prefWidth="83.0" text="Delete Tag" />
+      	
+      <Button layoutX="550.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleLogoutButton" text="Logout" />
+      	
+     <Button layoutX="614.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleQuitButton" text="Safe Quit" />
+      	
+      <Button layoutX="183.0" layoutY="452.0" mnemonicParsing="false" onAction="#handleLeftButton" text="&lt;" />
+      	
+      <Button layoutX="491.0" layoutY="452.0" mnemonicParsing="false" onAction="#handleRightButton" text="&gt;" />
+      	
+      <Text fx:id="dateAddedText" layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Added:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      
+      <Text fx:id="nameAlbumText" layoutX="196.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name's Album" textAlignment="CENTER" wrappingWidth="269.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      
+      <Text layoutX="594.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tags">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      
+      <ListView fx:id="tagsListView" layoutX="552.0" layoutY="266.0" prefHeight="200.0" prefWidth="125.0" />
+      
+      <ComboBox fx:id="albumComboBox" layoutX="530.0" layoutY="70.0" prefWidth="150.0" />
+      <Text fx:id="counterText" layoutX="629.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0/0" textAlignment="CENTER" wrappingWidth="54.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <VBox fx:id="thumbsViewBox" layoutX="14.0" layoutY="105.0" prefHeight="347.0" prefWidth="141.0" />
+   </children>
+</AnchorPane>

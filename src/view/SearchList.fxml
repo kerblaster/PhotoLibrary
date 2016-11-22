@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SearchListController">
+	
+   <children>
+      <Button layoutX="14.0" layoutY="494.0" mnemonicParsing="false" onAction="#handleAlbumListWindowButton" text="Back to Albums &gt;" />
+      	
+      <ImageView fx:id="bigImageView" fitHeight="347.0" fitWidth="332.0" layoutX="184.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" />
+      
+      <ListView fx:id="thumbnailListView" layoutX="14.0" layoutY="105.0" prefHeight="377.0" prefWidth="152.0" />
+      
+      <Button layoutX="550.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleLogoutButton" text="Logout" />
+      
+      <Button layoutX="614.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleQuitButton" text="Safe Quit" />
+      
+      <Button layoutX="183.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleLeftButton" text="&lt;" />
+      	
+      <Button layoutX="490.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleRightButton" text="&gt;" />
+      
+      <Text fx:id="searchText" layoutX="14.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Query:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      
+      <Text layoutX="594.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tags">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      
+      <ListView fx:id="tagsListView" layoutX="552.0" layoutY="150.0" prefHeight="331.0" prefWidth="125.0" />
+      	
+      <Button layoutX="578.0" layoutY="494.0" mnemonicParsing="false" onAction="#handleMakeAlbumButton" text="Make an Album" />
+      	
+      <Text fx:id="captionText" layoutX="209.0" layoutY="473.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caption of Image" textAlignment="CENTER" wrappingWidth="281.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      
+      <TextField fx:id="albumNameTextField" layoutX="431.0" layoutY="494.0" promptText="Name of New Album" />
+      <Text fx:id="dateAddedText" layoutX="32.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Added: ">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="counterText" layoutX="582.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0/0" textAlignment="CENTER" wrappingWidth="65.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="105.0" prefHeight="377.0" prefWidth="152.0">
+         <content>
+            <VBox fx:id="thumbsVBox" prefHeight="380.0" prefWidth="150.0" />
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
